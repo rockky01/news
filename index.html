@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#082c62">
+    <title>जन खबर | डुमरी बुज़ुर्ग</title>
+
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: #f3f4f6;
+            color: #171717;
+            font-family: Arial, "Noto Sans Devanagari", sans-serif
+        }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 12px 4%;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            overflow-x: auto;
+            white-space: nowrap;
+            font-size: 14px
+        }
+
+        .topbar strong {
+            color: #d00000
+        }
+
+        .navbar {
+            background: #082c62;
+            color: #fff;
+            padding: 16px 4%;
+            display: flex;
+            align-items: center;
+            gap: 25px
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 900;
+            background: #d90000;
+            padding: 10px 12px;
+            white-space: nowrap
+        }
+
+        .navlinks {
+            display: flex;
+            gap: 24px;
+            font-weight: bold;
+            white-space: nowrap
+        }
+
+        .breaking {
+            margin: 20px auto;
+            max-width: 1450px;
+            background: #d90000;
+            color: white;
+            border-radius: 40px;
+            padding: 13px 22px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-weight: bold
+        }
+
+        .breaking strong {
+            font-size: 20px;
+            white-space: nowrap
+        }
+
+        .breaking span {
+            border-left: 2px solid #ffffff80;
+            padding-left: 18px
+        }
+
+        .trending {
+            display: flex;
+            gap: 12px;
+            padding: 0 4% 20px;
+            overflow-x: auto;
+            white-space: nowrap
+        }
+
+        .trending span {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            padding: 10px 18px;
+            font-weight: bold
+        }
+
+        .banner {
+            min-height: 130px;
+            background: linear-gradient(110deg, #142d51, #8f1722, #142d51);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px
+        }
+
+        .banner h2 {
+            font-size: clamp(22px, 4vw, 36px);
+            margin: 0
+        }
+
+        .layout {
+            max-width: 1450px;
+            margin: 22px auto;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 24px;
+            padding: 0 18px
+        }
+
+        .card {
+            background: #fff;
+            padding: 22px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            min-width: 0
+        }
+
+        .category {
+            color: #d00000;
+            font-size: 14px;
+            font-weight: bold
+        }
+
+        h1 {
+            font-size: clamp(27px, 3vw, 42px);
+            line-height: 1.35;
+            margin: 12px 0
+        }
+
+        h2 {
+            font-size: 23px;
+            margin-top: 0
+        }
+
+        .meta {
+            color: #777;
+            font-size: 13px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px
+        }
+
+        .article {
+            font-size: 17px;
+            line-height: 1.9
+        }
+
+        .facts {
+            background: #f8f8f8;
+            border-left: 4px solid #d00000;
+            padding: 14px 18px;
+            line-height: 1.9
+        }
+
+        .side-title {
+            border-bottom: 3px solid #d00000;
+            padding-bottom: 10px
+        }
+
+        .side-item {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+            line-height: 1.6;
+            font-weight: bold
+        }
+
+        .video-wrap {
+            background: #111;
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #000
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #000
+        }
+
+        .center-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 76px;
+            height: 76px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .72);
+            color: #fff;
+            font-size: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5
+        }
+
+        .center-play-btn:hover {
+            background: rgba(0, 0, 0, .9)
+        }
+
+        .center-play-btn:disabled {
+            opacity: .65;
+            cursor: wait
+        }
+
+        .center-play-btn.hidden {
+            display: none
+        }
+
+        #status {
+            margin-top: 12px;
+            padding: 12px;
+            background: #f2f2f2;
+            color: #222;
+            line-height: 1.6;
+            font-size: 14px;
+            border-radius: 4px
+        }
+
+        .small {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.7
+        }
+
+        footer {
+            background: #082c62;
+            color: white;
+            text-align: center;
+            padding: 25px
+        }
+
+        @media(max-width:800px) {
+            .navbar {
+                overflow-x: auto
+            }
+
+            .navlinks {
+                gap: 14px;
+                font-size: 13px
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+                padding: 0 12px
+            }
+
+            .breaking {
+                border-radius: 6px;
+                margin: 14px 12px;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 7px
+            }
+
+            .breaking span {
+                border-left: 0;
+                padding-left: 0
+            }
+
+            .banner {
+                min-height: 110px
+            }
+
+            .card {
+                padding: 17px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <strong>जन खबर</strong>
+        <span>ई-पेपर</span><span>बिहार</span><span>भारत</span>
+        <span>स्थानीय समाचार</span><span>वीडियो</span>
+    </div>
+
+    <header class="navbar">
+        <div class="logo">जन खबर</div>
+        <nav class="navlinks">
+            <span>होम</span><span>बिहार</span><span>भारत</span><span>वीडियो</span>
+        </nav>
+    </header>
+
+    <div class="breaking">
+        <strong>ब्रेकिंग न्यूज़</strong>
+        <span>डुमरी बुज़ुर्ग से जुड़ी जानकारी — परिवार ने मदद की अपील की</span>
+    </div>
+
+    <div class="trending">
+        <span>बिहार समाचार</span><span>सारण</span><span>डुमरी बुज़ुर्ग</span>
+        <span>नयागांव थाना</span><span>स्थानीय अपडेट</span>
+    </div>
+
+    <div class="banner">
+        <h2>आपकी जानकारी, आपके क्षेत्र की खबर</h2>
+    </div>
+
+    <main class="layout">
+
+        <section>
+            <article class="card">
+                <div class="category">स्थानीय जानकारी | सारण, बिहार</div>
+
+                <h1>संदीप कुमार और निशा कुमारी के बारे में जानकारी देने की अपील</h1>
+
+                <div class="meta">स्थान: डुमरी बुज़ुर्ग | संबंधित थाना: नयागांव</div>
+
+                <p class="article">
+                    परिवार से मिली जानकारी के अनुसार, संदीप कुमार 23 अक्टूबर 2026 को
+                    दोपहर लगभग 12 से 1 बजे के बीच घर से निकले थे और अभी तक घर नहीं लौटे हैं।
+                    निशा कुमारी के बारे में भी जानकारी प्राप्त करने की अपील की जा रही है।
+                </p>
+
+                <div class="facts">
+                    <strong>उपलब्ध जानकारी</strong><br>
+                    नाम: संदीप कुमार<br>
+                    नाम: निशा कुमारी<br>
+                    गांव: डुमरी बुज़ुर्ग<br>
+                    थाना: नयागांव<br>
+                    घर से निकलने की बताई गई तारीख: 23 अक्टूबर 2026<br>
+                    अनुमानित समय: दोपहर 12 से 1 बजे के बीच
+                </div>
+
+                <p class="article">
+                    यदि किसी व्यक्ति के पास इनके बारे में कोई विश्वसनीय जानकारी हो,
+                    तो कृपया परिवार या संबंधित पुलिस थाने से संपर्क करें।
+                    अपुष्ट खबरें और अफवाहें साझा न करें।
+                </p>
+
+                <p class="small">प्रकाशित करने से पहले परिवार से सभी विवरणों की पुष्टि करें।</p>
+            </article>
+        </section>
+
+        <aside>
+
+            <section class="card">
+                <h2 class="side-title">वीडियो देखें</h2>
+
+                <div class="video-wrap">
+                    <div class="video-container">
+                        <video id="newsVideo" playsinline preload="metadata">
+                            <source src="video.mp4" type="video/mp4">
+                            आपका ब्राउज़र वीडियो सपोर्ट नहीं करता।
+                        </video>
+
+                        <button type="button" id="centerPlayBtn" class="center-play-btn"
+                            aria-label="वीडियो चलाएँ">▶</button>
+                    </div>
+
+                    <div id="status" role="status" aria-live="polite">
+                        वीडियो चलाने के लिए बीच में दिए गए Play बटन को दबाएँ।
+                    </div>
+                </div>
+
+                <p class="small">
+                    वीडियो चलाने के लिए ब्राउज़र की लोकेशन अनुमति और स्थान की उपलब्धता आवश्यक है।
+                    यह पेज आपके निर्देशांकों को सेव या सर्वर पर नहीं भेजता।
+                </p>
+            </section>
+
+            <section class="card">
+                <h2 class="side-title">मुख्य जानकारी</h2>
+                <div class="side-item">संदीप कुमार — परिवार के अनुसार घर नहीं लौटे</div>
+                <div class="side-item">निशा कुमारी — जानकारी देने की अपील</div>
+                <div class="side-item">गांव: डुमरी बुज़ुर्ग</div>
+                <div class="side-item">थाना: नयागांव</div>
+            </section>
+
+            <section class="card">
+                <h2 class="side-title">पाठकों से अपील</h2>
+                <p class="article">
+                    किसी भी सूचना को साझा करने से पहले उसकी पुष्टि करें।
+                    निजी जानकारी या अपुष्ट आरोप प्रकाशित न करें।
+                </p>
+            </section>
+
+        </aside>
+    </main>
+
+    <footer>
+        <strong>जन खबर</strong>
+        <p>स्थानीय जानकारी को जिम्मेदारी से साझा करें।</p>
+    </footer>
+
+    <script>
+        (() => {
+            const video = document.getElementById('newsVideo');
+            const playBtn = document.getElementById('centerPlayBtn');
+            const statusBox = document.getElementById('status');
+
+            let locationVerified = false;
+            let checkingLocation = false;
+
+            video.pause();
+
+            function setStatus(message, isError = false) {
+                statusBox.textContent = message;
+                statusBox.style.color = isError ? '#b42318' : '#222';
+            }
+
+            function checkLocationAndPlay() {
+                if (checkingLocation) return;
+
+                if (!window.isSecureContext || !navigator.geolocation) {
+                    alert('लोकेशन जाँचने के लिए HTTPS वेबसाइट और समर्थित ब्राउज़र आवश्यक है।');
+                    setStatus('कृपया HTTPS वेबसाइट को समर्थित ब्राउज़र में खोलें।', true);
+                    return;
+                }
+
+                checkingLocation = true;
+                playBtn.disabled = true;
+                setStatus('लोकेशन की अनुमति और स्थान उपलब्धता जाँची जा रही है...');
+
+                navigator.geolocation.getCurrentPosition(
+                    function () {
+                        // Coordinates are deliberately ignored.
+                        // Location is not stored or transmitted.
+                        locationVerified = true;
+                        checkingLocation = false;
+                        playBtn.disabled = false;
+
+                        video.play().then(function () {
+                            playBtn.classList.add('hidden');
+                            setStatus('वीडियो चल रहा है।');
+                        }).catch(function () {
+                            playBtn.classList.remove('hidden');
+                            setStatus('लोकेशन उपलब्ध है। वीडियो चलाने के लिए फिर Play दबाएँ।');
+                        });
+                    },
+                    function (error) {
+                        checkingLocation = false;
+                        playBtn.disabled = false;
+                        playBtn.classList.remove('hidden');
+
+                        if (error.code === error.PERMISSION_DENIED) {
+                            alert('लोकेशन की अनुमति नहीं मिली। ब्राउज़र की Site Settings में इस वेबसाइट के लिए Location अनुमति दें।');
+                            setStatus('अनुमति देने के बाद Play बटन दबाकर दोबारा प्रयास करें।', true);
+                        } else if (error.code === error.POSITION_UNAVAILABLE) {
+                            alert('फोन की लोकेशन उपलब्ध नहीं है। फोन की Settings में Location चालू करें और फिर दोबारा प्रयास करें।');
+                            setStatus('लोकेशन चालू करने के बाद दोबारा Play दबाएँ।', true);
+                        } else if (error.code === error.TIMEOUT) {
+                            alert('लोकेशन जाँच में समय लग गया। कृपया दोबारा प्रयास करें।');
+                            setStatus('लोकेशन जाँच पूरी नहीं हुई।', true);
+                        } else {
+                            alert('लोकेशन जाँच नहीं हो सकी। कृपया दोबारा प्रयास करें।');
+                            setStatus('लोकेशन उपलब्ध होने पर फिर प्रयास करें।', true);
+                        }
+                    },
+                    {
+                        enableHighAccuracy: false,
+                        timeout: 15000,
+                        maximumAge: 0
+                    }
+                );
+            }
+
+            playBtn.addEventListener('click', checkLocationAndPlay);
+
+            // Block direct playback before the location check.
+            video.addEventListener('play', function () {
+                if (!locationVerified) {
+                    video.pause();
+                    playBtn.classList.remove('hidden');
+                    setStatus('वीडियो चलाने से पहले बीच में दिए गए Play बटन से लोकेशन जाँचें।', true);
+                }
+            });
+
+            video.addEventListener('pause', function () {
+                playBtn.classList.remove('hidden');
+            });
+
+            video.addEventListener('ended', function () {
+                playBtn.classList.remove('hidden');
+            });
+
+            video.addEventListener('error', function () {
+                setStatus('वीडियो लोड नहीं हुआ। जाँचें कि video.mp4 इसी फ़ोल्डर में मौजूद है।', true);
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
